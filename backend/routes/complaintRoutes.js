@@ -9,6 +9,7 @@ const {
   getMyComplaints,
   getAllComplaints,
   updateComplaintStatus,
+  getComplaintStats,
 } = require("../controllers/complaintController");
 
 // ---------- STUDENT ----------
@@ -18,5 +19,6 @@ router.get("/my", protect, getMyComplaints);
 // ---------- ADMIN ----------
 router.get("/", protect, adminOnly, getAllComplaints);
 router.put("/:id/status", protect, adminOnly, updateComplaintStatus);
+router.get("/stats", protect, adminOnly, getComplaintStats);
 
 module.exports = router;

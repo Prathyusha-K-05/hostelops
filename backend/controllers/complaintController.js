@@ -1,6 +1,7 @@
 const Complaint = require("../models/Complaint");
 
 // STUDENT: Create complaint
+
 exports.createComplaint = async (req, res) => {
   try {
     const { title, category, description, priority } = req.body;
@@ -50,3 +51,24 @@ exports.updateComplaintStatus = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }; 
+
+exports.getComplaintStats = async (req, res) => {
+  const total = await Complaint.countDocuments();
+
+  const pending = await Complaint.countDocuments({ status: "pending" });
+
+  const inProgress = await Complaint.countDocuments({
+    status: "in-progress",
+  });
+
+  const resolved = await Complaint.countDocuments({
+    status: "resolved",
+  });
+
+  res.json({
+    total,
+    pending,
+    inProgress,
+    resolved,
+  });
+};
